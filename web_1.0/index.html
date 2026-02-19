@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Mastery Pro - Ultra IDE</title>
+    
+    <!-- Libraries -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" id="prism-theme" />
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+</head>
+<body class="dark-mode">
+
+<div class="sidebar">
+    <button class="theme-toggle" onclick="toggleTheme()">🌙 Switch Theme</button>
+    
+    <!-- Knowledge Map -->
+    <div class="stat-card">
+        <div style="font-weight: bold; font-size: 0.9rem; margin-bottom: 10px;">Knowledge Map</div>
+        <div class="chart-container">
+            <div id="mastery-donut">
+                <div class="donut-hole">
+                    <div id="mastery-percent" class="mastery-percent">0%</div>
+                </div>
+            </div>
+        </div>
+        <div id="status-counts" class="status-info"></div>
+    </div>
+
+    <!-- Quick Navigation -->
+    <div class="stat-card">
+        <div style="font-weight: bold; margin-bottom: 12px; font-size: 0.9rem;">Quick Navigation</div>
+        <div id="week-nav-list" class="nav-links-container">
+            <!-- Dynamically populated -->
+        </div>
+    </div>
+
+    <!-- Data Management -->
+    <div class="stat-card">
+        <div style="font-weight: bold; margin-bottom: 12px; font-size: 0.9rem;">Data Management</div>
+        <div class="btn-group">
+            <button class="mgmt-btn" onclick="exportData()">💾 Backup to JSON</button>
+            <button class="mgmt-btn" onclick="document.getElementById('importInput').click()">📂 Restore Backup</button>
+            <button class="mgmt-btn danger-btn" onclick="resetAll()">🗑️ Reset All Data</button>
+            <input type="file" id="importInput" style="display:none" onchange="importData(event)">
+        </div>
+    </div>
+</div>
+
+<div class="main-content" id="scroll-container">
+    <div class="tabs">
+        <div class="tab active" id="tab-list" onclick="switchTab('list')">📚 Code Library</div>
+        <div class="tab" id="tab-conv" onclick="switchTab('converter')">⚙️ Bulk Import</div>
+        <button class="add-week-btn" onclick="addWeek()">+ New Week</button>
+    </div>
+    
+    <div id="list-view">
+        <div id="weeks-container"></div>
+    </div>
+    
+    <div id="converter-view" style="display:none">
+        <h3>Bulk List Importer</h3>
+        <textarea id="converter-input" placeholder="Paste markdown list here..."></textarea>
+        <button class="tab active" style="border:none; padding: 12px 25px; margin-top:10px; background:var(--green);" onclick="runConverter()">Process & Overwrite</button>
+    </div>
+</div>
+
+<!-- IDE Workspace Modal -->
+<div id="editor-modal">
+    <div class="modal-content">
+        <div class="window-header">
+            <div class="window-controls">
+                <span class="dot red" onclick="closeEditor()"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+            <div id="modal-task-name" class="window-title">filename.c</div>
+            <div class="window-actions">
+                <button class="save-btn" onclick="saveEditor()">Save</button>
+                <button class="close-btn" onclick="closeEditor()">Close</button>
+            </div>
+        </div>
+        <div class="editor-frame">
+            <div class="line-numbers" id="line-numbers">1</div>
+            <div class="code-area">
+                <textarea id="task-code" spellcheck="false" oninput="updateEditor()" onscroll="syncScroll()"></textarea>
+                <pre id="prism-pre" aria-hidden="true"><code id="prism-code" class="language-c"></code></pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

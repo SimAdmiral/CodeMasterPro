@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Mastery Pro - Ultra IDE</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" id="prism-theme" />
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+</head>
+<body class="dark-mode">
+
+
+
+
+<div class="sidebar" id="sidebar">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+        <span style="font-weight:bold; color:var(--accent);">Menu</span>
+        <button class="action-icon" onclick="toggleSidebar()" title="Collapse Sidebar">◀</button>
+    </div>
+
+    <!-- ... existing sidebar content ... -->
+    <button class="theme-toggle" onclick="toggleTheme()">🌙 Switch Theme</button>
+    
+    
+    <div class="stat-card">
+        <div style="font-weight: bold; margin-bottom: 10px; font-size: 0.9rem;">💻 Local Workspace</div>
+        
+        <!-- New Input Group Container -->
+        <div class="input-group">
+            <input type="text" id="base-path" class="path-input" placeholder="Ex: C:/Projects/PB111">
+            <button class="icon-btn accent-btn" onclick="syncLocalFolder()" title="Scan Folders">🔄</button>
+        </div>
+    </div>
+
+    <!-- Knowledge Map -->
+    <div class="stat-card">
+        <div style="font-weight: bold; font-size: 0.9rem; margin-bottom: 10px;">Knowledge Map</div>
+        <div class="chart-container">
+            <div id="mastery-donut">
+                <div class="donut-hole" id="mastery-percent">0%</div>
+            </div>
+        </div>
+        <div id="status-counts" style="text-align: left; font-size: 0.8rem; margin-top: 10px;"></div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="stat-card">
+        <div style="font-weight: bold; margin-bottom: 12px; font-size: 0.8rem;">Quick Navigation</div>
+        <div id="week-nav-list" class="nav-links-container"></div>
+    </div>
+
+    <!-- Data -->
+    <div class="stat-card">
+        <button class="mgmt-btn" onclick="exportData()">💾 Backup JSON</button>
+        <button class="mgmt-btn" onclick="document.getElementById('importInput').click()">📂 Restore Backup</button>
+        <button class="mgmt-btn danger-btn" onclick="resetAll()">🗑️ Reset Everything</button>
+        <input type="file" id="importInput" style="display:none" onchange="importData(event)">
+    </div>
+    <!-- ... rest of sidebar ... -->
+</div>
+
+
+<div class="main-content">
+    <div class="tabs">
+        <!-- The Open Menu button is now part of the tab bar -->
+        <button id="sidebar-open-btn" class="tab-btn" onclick="toggleSidebar()" style="display:none; margin-right: 15px;">
+            ☰
+        </button>
+
+        <div class="tab active" id="tab-list" onclick="switchTab('list')">📚 Code Library</div>
+        <div class="tab" id="tab-conv" onclick="switchTab('converter')">⚙️ Bulk Import</div>
+        <button class="add-week-btn" onclick="addWeek()">+ New Week</button>
+    </div>
+    
+    <div id="list-view">
+        <div id="weeks-container"></div>
+    </div>
+    
+    <div id="converter-view" style="display:none">
+        <h3>Bulk List Importer</h3>
+        <textarea id="converter-input" style="width:100%; height:200px; background:var(--card-bg); color:var(--text); border:1px solid var(--border); padding:10px; border-radius:8px;" placeholder="Paste markdown list here..."></textarea>
+        <button class="mgmt-btn" style="margin-top:10px; background:var(--green); color:white; border:none;" onclick="runConverter()">Process & Overwrite</button>
+    </div>
+</div>
+
+<!-- Editor Modal -->
+<div id="editor-modal">
+    <div class="modal-content">
+        <div class="window-header">
+            <div style="display:flex; align-items:center;">
+                <div id="modal-task-name" style="font-family:monospace; font-weight:bold;">filename.c</div>
+                <span id="read-only-indicator" class="read-only-badge" style="display:none;">Live File (Read Only)</span>
+            </div>
+            <div>
+                <button id="editor-save-btn" class="ws-btn" style="background:#2ea043; color:white; border:none;" onclick="saveEditor()">Save Workspace</button>
+                <button class="ws-btn" onclick="closeEditor()">Close</button>
+            </div>
+        </div>
+        <div class="editor-frame">
+            <div class="line-numbers" id="line-numbers">1</div>
+            <div style="flex:1; position:relative;">
+                <textarea id="task-code" spellcheck="false" oninput="updateEditor()" onscroll="syncScroll()"></textarea>
+                <pre id="prism-pre"><code id="prism-code" class="language-c"></code></pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
