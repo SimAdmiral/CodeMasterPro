@@ -158,7 +158,9 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:
 .read-only-badge { background: var(--purple); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.65rem; text-transform: uppercase; margin-left: 10px; font-weight: bold; }
 
 .editor-frame { flex: 1; display: flex; overflow: hidden; position: relative; }
-.line-numbers { width: 45px; color: #555; padding: 20px 0; text-align: right; padding-right: 10px; font-family: 'Consolas', monospace; font-size: 16px; border-right: 1px solid var(--editor-border); overflow: hidden; }
+/* .line-numbers { width: 45px; color: #555; padding: 20px 0; text-align: right; padding-right: 10px; font-family: 'Consolas', monospace; font-size: 16px; border-right: 1px solid var(--editor-border); overflow: hidden; } */
+.line-numbers { width: 45px; color: #555; padding: 20px 0; text-align: right; padding-right: 10px; font-family: 'Consolas', monospace; font-size: 16px; line-height: 24px; border-right: 1px solid var(--editor-border); overflow: hidden; }
+
 #task-code, #prism-pre { position: absolute; inset: 0; padding: 20px; font-family: 'Consolas', monospace; font-size: 16px; line-height: 24px; white-space: pre; margin: 0; border: none; outline: none; box-sizing: border-box; }
 #task-code { background: transparent; color: transparent; caret-color: var(--caret); z-index: 2; resize: none; width: 100%; height: 100%; }
 #prism-pre { z-index: 1; pointer-events: none; }
@@ -350,4 +352,63 @@ body.light-mode #task-code {
 
 #list-view, #converter-view {
     padding: 30px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- RESOURCE LINKS STYLING --- */
+.resource-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.85rem;
+}
+.resource-group:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.res-label {
+    color: var(--text);
+    font-weight: 600;
+}
+.res-links {
+    display: flex;
+    gap: 5px;
+}
+.res-tag {
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+}
+/* File type specific colors */
+.res-tag.html { color: #e44d26; background: rgba(228, 77, 38, 0.1); border-color: rgba(228, 77, 38, 0.3); }
+.res-tag.pdf { color: #ff4d4d; background: rgba(255, 77, 77, 0.1); border-color: rgba(255, 77, 77, 0.3); }
+.res-tag.txt { color: #3498db; background: rgba(52, 152, 219, 0.1); border-color: rgba(52, 152, 219, 0.3); }
+
+.res-tag:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.2);
 }
